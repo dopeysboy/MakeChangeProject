@@ -38,11 +38,33 @@ public class MakeChange {
 			//transaction loop it doesn't quit automatically
 			transactionLoop = true;
 			
-			System.out.println("Please enter the the price of the item you are buying: ");
-			price = kb.nextDouble();
+			//a string to make sure what the user inputted was a double
+			String testString = "";
 			
-			System.out.println("Please enter the amount given to the cashier: ");
-			tendered = kb.nextDouble();
+			while(true) {
+				System.out.println("Please enter the the price of the item you are buying: ");
+				testString = kb.next();
+				
+				try {
+					price = Double.parseDouble(testString);
+					break;
+				} catch (Exception e) {
+					System.err.println("That was not a number, please input a dollar amount!");
+				}
+				
+			}
+			
+			while(true) {
+				System.out.println("Please enter the amount given to the cashier: ");
+				testString = kb.next();
+				
+				try {
+					tendered = Double.parseDouble(testString);
+					break;
+				} catch (Exception e) {
+					System.err.println("That was not a number, please input a dollar amount!");
+				}
+			}
 			
 			change = Math.round(calculateChange(price, tendered) * 100.0) / 100.0;
 			
@@ -86,7 +108,7 @@ public class MakeChange {
 	/**
 	 * Given an input of double change, will sysout the denominations for that change in the biggest
 	 * possible way (i.e. change = 1.69 will sysout: 
-	 * $1 - 1
+	 * $1 - )1
 	 * $.25 - 2
 	 * $.10 - 1
 	 * $.05 - 1
