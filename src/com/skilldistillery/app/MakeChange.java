@@ -12,23 +12,27 @@ public class MakeChange {
 	 * Will err if the user inputs a price or tendered that is not a number.
 	**/
 	
+	static Scanner kb = new Scanner(System.in);
+	
+	//variables that will hold user input for the price of an item,
+	//how much money they gave the cashier, and how much change they
+	//are due
+	static double price, tendered, change;
+	
+	//mainLoop determines if the program repeats itself
+	//transaction loop will be true until the user inputs a correct value after being asked
+	//if they want to continue conducting transactions
+	static boolean mainLoop = true, transactionLoop;
+	
+	//String used to ask the user if they want to keep conducting transactions
+	static String keepRunning;
+	
 	public static void main(String[] args) {
-		Scanner kb = new Scanner(System.in);
-		
-		//variables that will hold user input for the price of an item,
-		//how much money they gave the cashier, and how much change they
-		//are due
-		double price, tendered, change;
-		
-		//mainLoop determines if the program repeats itself
-		//transaction loop will be true until the user inputs a correct value after being asked
-		//if they want to continue conducting transactions
-		boolean mainLoop = true, transactionLoop;
-		
-		//String used to ask the user if they want to keep conducting transactions
-		String keepRunning;
-		
-		//main loop of the program
+		cashierInteraction();
+		kb.close();
+	}
+	
+	public static void cashierInteraction() {
 		while(mainLoop) {
 			//reset the value of transactionLoop so the next time the user gets to 
 			//transaction loop it doesn't quit automatically
@@ -52,36 +56,20 @@ public class MakeChange {
 				System.out.println("Would you conduct another transaction? Y/N");
 				keepRunning = kb.next();
 				
-				switch (keepRunning) {
-					//probably excessive TODO: maybe change to if(keepRunning.equals(...).caseInsensitive statement?
-					case "Y":
-					case "y":
-					case "yes":
-					case "Yes":
-					case "YES":
-					case "YeS":
-					case "yEs":
-					case "YEs":
-					case "yES":
-						transactionLoop = false;
-						break;
-					case "N":
-					case "n":
-					case "No":
-					case "no":
-					case "NO":
-					case "nO":
-						System.out.println("Thank you! Good bye!");
-						mainLoop = false;
-						transactionLoop = false;
-						break;
-					default:
-						System.err.println("Please type y, yes, n, or no (non-case-sensitive)");
-						break;
+				
+				if(keepRunning.equalsIgnoreCase("Y") || keepRunning.equalsIgnoreCase("yes")) {
+					transactionLoop = false;
+				}
+				else if(keepRunning.equalsIgnoreCase("n") || keepRunning.equalsIgnoreCase("no")) {
+					mainLoop = false;
+					transactionLoop = false;
+					System.out.println("Thank you! Good bye!");
+				}
+				else {
+					System.err.println("Please type y, yes, n, or no (non-case-sensitive");
 				}
 			}
 		}
-		kb.close();
 	}
 	
 	//Given an input of double price and double tendered, will return the total change required
