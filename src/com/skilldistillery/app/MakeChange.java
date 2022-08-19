@@ -40,7 +40,7 @@ public class MakeChange {
 			System.out.println("Please enter the amount given to the cashier: ");
 			tendered = kb.nextDouble();
 			
-			change = calculateChange(price, tendered);
+			change = Math.round(calculateChange(price, tendered) * 100.0) / 100.0;
 			
 			//this will not run if they did not provide enough change
 			if(change >= 0) {
@@ -148,7 +148,7 @@ public class MakeChange {
 			nickel ++;
 			amtToTender -= .05;
 		}
-		while(amtToTender / .01 >= 1) {
+		while(amtToTender > 0.005) {
 			penny ++;
 			amtToTender -= .01;
 		}
